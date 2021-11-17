@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    form{
+      margin: auto;
+      width: 35%;
+    }
+
+    .result{
+      margin: auto;
+      width: 35%;
+      border: 1px solid #ccc;
+    }
+</style>
+<head>
+    <title>Car Price Predictor</title>
+</head>
+<form action="{{ url_for('main') }}" method="POST">
+    <fieldset>
+        <legend>Input Values: </legend>
+        Company:
+        <select class="selectpicker form-control" id="company" name="company" required="1" onchange="load_car_models(this.id, 'car_model')">
+            {% for company in companies %}
+              <option value="{{company}}">{{company}}</option>
+            {% endfor %}
+        </select>
+        Name:
+        <select class="selectpicker form-control" id="car_model" name="car_model" required="1">
+            <option value=""></option>
+        </select>
+        Year:
+         <select class="selectpicker form-control" id="year" name="year" required="1">
+             {% for year in years %}
+               <option value="{{year}}">{{year}}</option>
+             {% endfor %}
+         </select>
+        Fuel Type:
+        <select class="selectpicker form-control" id="fuel_type" name="fuel_type" required="1">
+            {% for fuel_type in fuel_type %}
+              <option value="{{fuel_type}}">{{fuel_type}}</option>
+            {% endfor %}
+        </select>
+        Km Driven:
+        <input name="km_driven" type="number" required="1">
+        <br>
+    </fieldset>
+</form>
+<br>
+<div class="result" align="center">
+    {% if result %}
+      {% for variable, value in original_input.items() %}
+        <b>{{ variable }}</b> : {{ value }}
+      {% endfor %}
+      <br>
+      <br> Predicted Car Price:
+        <p style="font-size: 50px">{{ result }}</p>
+    {% endif %}
+</div>
+</html>
